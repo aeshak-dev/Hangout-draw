@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hangout Draw</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="join" class="modal">
+  <div class="card">
+    <h1>Hangout Draw</h1>
+    <p>One canvas, as many hands as you like. Pick a name, share the room code, and start drawing.</p>
+    <label>Your name <input id="jName" maxlength="20" placeholder="e.g. Alex"></label>
+    <label>Room code <input id="jRoom" maxlength="30"></label>
+    <label>Your colour <input id="jColor" type="color"></label>
+    <button id="jGo" class="primary">Start drawing</button>
+  </div>
+</div>
+
+<header>
+  <b class="logo">Hangout Draw</b>
+  <button id="copyLink" title="Copy invite link">Invite: <span id="roomLabel"></span></button>
+  <div id="users"></div>
+  <span id="status" class="off">Offline</span>
+  <div class="sp"></div>
+  <button id="undo">Undo</button>
+  <button id="clear">Clear</button>
+  <button id="save">Save PNG</button>
+  <button id="zout" aria-label="Zoom out">−</button><span id="zlab">100%</span><button id="zin" aria-label="Zoom in">+</button><button id="zfit">Fit</button>
+  <label class="inl">Paper <input id="bg" type="color" value="#ffffff"></label>
+  <label class="inl"><input id="grid" type="checkbox"> Grid</label>
+</header>
+
+<main>
+  <nav id="tools" aria-label="Tools"></nav>
+
+  <section id="stage">
+    <div id="wrap">
+      <canvas id="main"></canvas>
+      <canvas id="live"></canvas>
+      <div id="curs"></div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="tabs">
+      <button class="tab on" data-p="p-color">Colour</button>
+      <button class="tab" data-p="p-brush">Brush</button>
+      <button class="tab" data-p="p-chat">Chat <i id="chatDot" hidden></i></button>
+    </div>
+
+    <div id="p-color" class="panel">
+      <div class="cur">
+        <div id="big"></div>
+        <input id="hex" maxlength="7" spellcheck="false" aria-label="Hex colour">
+        <button id="eye" title="Pick a colour from anywhere on screen">Eyedropper</button>
+      </div>
+      <div class="tabs sub">
+        <button class="stab on" data-c="c-wheel">Wheel</button>
+        <button class="stab" data-c="c-rings">Rings</button>
+        <button class="stab" data-c="c-sets">Sets</button>
+        <button class="stab" data-c="c-mix">Mixer</button>
+      </div>
+      <div id="c-wheel" class="cpan">
+        <canvas id="wheel" width="240" height="240"></canvas>
+        <label>Brightness <input id="bri" type="range" min="0" max="100" value="100"></label>
+      </div>
+      <div id="c-rings" class="cpan" hidden><canvas id="rings" width="240" height="240"></canvas></div>
+      <div id="c-sets" class="cpan" hidden></div>
+      <div id="c-mix" class="cpan" hidden>
+        <label>Hue <input type="range" id="mh" min="0" max="360"></label>
+        <label>Saturation <input type="range" id="ms" min="0" max="100"></label>
+        <label>Lightness <input type="range" id="ml" min="0" max="100"></label>
+        <label>Pick any colour <input id="native" type="color"></label>
+      </div>
+      <h4>Recent colours</h4>
+      <div id="recent" class="dots"></div>
+    </div>
+
+    <div id="p-brush" class="panel" hidden>
+      <div class="prevbox"><div id="prev"></div></div>
+      <label>Size <b id="v-size">8</b><input type="range" data-k="size" min="1" max="120" value="8"></label>
+      <label>Opacity <b id="v-alpha">100</b>%<input type="range" data-k="alpha" data-d="100" min="5" max="100" value="100"></label>
+      <label>Softness <b id="v-blur">0</b><input type="range" data-k="blur" min="0" max="40" value="0"></label>
+      <label>Symmetry rays <b id="v-symN">1</b><input type="range" data-k="symN" min="1" max="12" value="1"></label>
+      <label class="chk"><input type="checkbox" id="mirror"> Mirror each ray</label>
+      <label class="chk"><input type="checkbox" id="fill"> Fill shapes</label>
+      <h4>Stamps</h4>
+      <div id="stamps" class="dots"></div>
+    </div>
+
+    <div id="p-chat" class="panel chat" hidden>
+      <div id="msgs"></div>
+      <form id="chatForm">
+        <input id="chatIn" maxlength="500" placeholder="Say something…" autocomplete="off">
+        <button class="primary">Send</button>
+      </form>
+    </div>
+  </aside>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
